@@ -9,9 +9,9 @@ import sklearn.metrics
 import Bio.SeqUtils.MeltingTemp as Tm
 import Bio.Entrez as Entrez
 import Bio.SeqUtils as SeqUtil
-import features.microhomology as microhomology
+import azimuth.features.microhomology as microhomology
 from Bio import SeqIO
-import metrics as ranking_metrics
+# import metrics as ranking_metrics
 import os
 import pickle
 import glob
@@ -21,10 +21,10 @@ import glob
 import Bio.Seq as Seq
 import time
 import scipy.stats as st
-import util
+# import util
 import sys
 import pandas as pd
-import corrstats
+import azimuth.corrstats as corrstats
 
 def qqplot(pvals, fileout = None, alphalevel = 0.05,legend=None,xlim=None,ylim=None,fixaxes=True,addlambda=True,minpval=1e-20,title=None,h1=None,figsize=[5,5],grid=True, markersize=2):
     '''
@@ -286,7 +286,7 @@ def guide_positional_features(guide_seq, gene, strand):
     """
 
     guide_seq = Seq.Seq(guide_seq)
-    gene_seq = Seq.Seq(util.get_gene_sequence(gene)).reverse_complement()
+    gene_seq = Seq.Seq(get_gene_sequence(gene)).reverse_complement()
     if strand=='sense':
         guide_seq = guide_seq.reverse_complement()
     ind = gene_seq.find(guide_seq)
