@@ -92,7 +92,7 @@ def qqplot(pvals, fileout = None, alphalevel = 0.05,legend=None,xlim=None,ylim=N
         #pl.plot([0,qemp.max()], [0,qemp.max()],'r')        
         if addlambda:
             lambda_gc = estimate_lambda(pval)
-            print "lambda=%1.4f" % lambda_gc
+            print("lambda=%1.4f" % lambda_gc)
             #pl.legend(["gc="+ '%1.3f' % lambda_gc],loc=2)   
             # if there's only one method, just print the lambda
             if len(pvallist) == 1:
@@ -291,7 +291,7 @@ def guide_positional_features(guide_seq, gene, strand):
         guide_seq = guide_seq.reverse_complement()
     ind = gene_seq.find(guide_seq)
     if ind ==-1:
-        print "returning None, could not find guide %s in gene %s" % (guide_seq, gene)
+        print("returning None, could not find guide %s in gene %s" % (guide_seq, gene))
         return ""
     assert gene_seq[ind:(ind+len(guide_seq))]==guide_seq, "match not right"
     ## now get what we want from this:
@@ -310,7 +310,7 @@ def convert_to_thirty_one(guide_seq, gene, strand):
         guide_seq = guide_seq.reverse_complement()
     ind = gene_seq.find(guide_seq)
     if ind ==-1:
-        print "returning sequence+'A', could not find guide %s in gene %s" % (guide_seq, gene)
+        print("returning sequence+'A', could not find guide %s in gene %s" % (guide_seq, gene))
         return gene_seq + 'A'
     assert gene_seq[ind:(ind+len(guide_seq))]==guide_seq, "match not right"
     #new_mer = gene_seq[ind:(ind+len(guide_seq))+1] #looks correct, but is wrong, due to strand frame-of-reference
@@ -331,25 +331,25 @@ def concatenate_feature_sets(feature_sets, keys=None):
         keys = feature_sets.keys()
 
     F = feature_sets[keys[0]].shape[0]
-    for set in feature_sets.keys():
-        F2 = feature_sets[set].shape[0]
-        assert F == F2, "not same # individuals for features %s and %s" % (keys[0], set)
+    for _et in feature_sets.keys():
+        F2 = feature_sets[_set].shape[0]
+        assert F == F2, "not same # individuals for features %s and %s" % (keys[0], _set)
 
     N = feature_sets[keys[0]].shape[0]
     inputs = np.zeros((N, 0))
     feature_names = []
     dim = {}
     dimsum = 0
-    for set in keys:
-        inputs_set = feature_sets[set].values
-        dim[set] = inputs_set.shape[1]
-        dimsum += dim[set]
+    for _set in keys:
+        inputs_set = feature_sets[_set].values
+        dim[_set] = inputs_set.shape[1]
+        dimsum += dim[_set]
         inputs = np.hstack((inputs, inputs_set))
-        feature_names.extend(feature_sets[set].columns.tolist())
+        feature_names.extend(feature_sets[_set].columns.tolist())
 
     if False:
         inputs.shape
-        for j in keys: print j + str(feature_sets[j].shape)
+        for j in keys: print(j + str(feature_sets[j].shape))
         import ipdb; ipdb.set_trace()
 
     #print "final size of inputs matrix is (%d, %d)" % inputs.shape
@@ -383,7 +383,7 @@ def spearmanr_nonan(x,y):
     r, p = st.spearmanr(x, y)
     if np.isnan(p):
         if len(np.unique(x))==1 or len(np.unique(y))==1:
-            print "WARNING: spearmanr is nan due to unique values, setting to 0"
+            print("WARNING: spearmanr is nan due to unique values, setting to 0")
             p = 0.0
             r = 0.0
         else:
@@ -466,7 +466,7 @@ def target_genes_stats(genes=['HPRT1', 'TADA1', 'NF2', 'TADA2B', 'NF1', 'CUL3', 
     for gene in genes:
         seq = get_gene_sequence(gene)
         if seq != None:
-            print '%s \t\t\t\t len: %d \t GCcont: %.3f \t Temp: %.4f \t molweight: %.4f' % (gene, len(seq), SeqUtil.GC(seq), Tm.Tm_staluc(seq, rna=False), SeqUtil.molecular_weight(seq, 'DNA'))
+            print('%s \t\t\t\t len: %d \t GCcont: %.3f \t Temp: %.4f \t molweight: %.4f' % (gene, len(seq), SeqUtil.GC(seq), Tm.Tm_staluc(seq, rna=False), SeqUtil.molecular_weight(seq, 'DNA')))
 
 
 def ranktrafo(data):
@@ -1004,7 +1004,7 @@ def plot_all_metrics(metrics, gene_names, all_learn_options, save, plots=None, b
                     plt.bar(ind+(i*width), metrics[method][metric], width, color=plt.cm.Paired(1.*i/len(metrics.keys())), label=method)
 
                 median_metric = np.median(metrics[method][metric])
-                print method, metric, median_metric
+                print(method, metric, median_metric)
                 assert not np.isnan(median_metric), "found nan for %s, %s" % (method, metric)
                 if metric not in boxplot_arrays.keys():
                     boxplot_arrays[metric] = np.array(metrics[method][metric])[:, None]
@@ -1061,7 +1061,7 @@ def load_results(directory, all_results, all_learn_options, model_filter=None, a
     if filelist ==[]:
         raise Exception("found no pickle files in %s" % directory)
     else:
-        print "found %d files in %s" % (len(filelist), directory)
+        print("found %d files in %s" % (len(filelist), directory))
 
     for results_file in filelist:
         if 'learn_options' in results_file:
@@ -1074,7 +1074,7 @@ def load_results(directory, all_results, all_learn_options, model_filter=None, a
                     if m in results_file:
                         in_filt = True
                 if not in_filt:
-                    print "%s not in model_filter" % (results_file)#, model_filter)
+                    print("%s not in model_filter" % (results_file))#, model_filter)
                     continue
             elif model_filter not in results_file:
                 continue
@@ -1094,7 +1094,7 @@ def load_results(directory, all_results, all_learn_options, model_filter=None, a
             else:
                 k_new = k
             assert k_new not in all_results.keys(), "found %s already" % k
-            print "adding key %s (from file %s)" % (k_new, os.path.split(results_file)[-1])
+            print("adding key %s (from file %s)" % (k_new, os.path.split(results_file)[-1]))
             all_results[k_new] = results[k]
             all_learn_options[k_new] = learn_options[k]
             num_added = num_added +1
@@ -1245,13 +1245,13 @@ def plot_old_vs_new_feat(results, models, fontsize=20, filename=None, print_outp
         feat_AUC_se.append(np.std(metrics_feat['AUC']))
 
 
-    print "old features"
-    print "mean: " + str(base_spearman_means)
-    print "std: " + str(base_spearman_std)
+    print("old features")
+    print("mean: " + str(base_spearman_means))
+    print("std: " + str(base_spearman_std))
 
-    print "old + new features"
-    print "mean: " + str(feat_spearman_means)
-    print "std: " + str(feat_spearman_std)
+    print("old + new features")
+    print("mean: " + str(feat_spearman_means))
+    print("std: " + str(feat_spearman_std))
 
     plt.figure()
     ind = np.arange(len(models))
@@ -1322,7 +1322,7 @@ if __name__ == '__main__':
         X, Y = combine_organisms()
         X.to_pickle('../data/X.pd') #sequence features (i.e. inputs to prediction)
         Y.to_pickle('../data/Y.pd') #cell-averaged ranks, plus more (i.e. possible targets for prediction)
-        print "done writing to file"
+        print("done writing to file")
     elif V =="2":
         # this is now all in predict.py
         pass
