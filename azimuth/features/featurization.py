@@ -5,6 +5,7 @@ import numpy as np
 import Bio.SeqUtils as SeqUtil
 import Bio.Seq as Seq
 import azimuth.util
+import azimuth.features.microhomology as microhomology
 import sys
 import Bio.SeqUtils.MeltingTemp as Tm
 import pickle

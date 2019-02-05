@@ -1,4 +1,4 @@
-import azimuth.predict as pd
+# import azimuth.predict as pd
 import copy
 import os
 import numpy as np
@@ -7,8 +7,8 @@ import shutil
 import pickle
 import pylab as plt
 import pandas
-import azimuth.local_multiprocessing
-import azimuth.load_data
+# import azimuth.local_multiprocessing
+# import azimuth.load_data
 import azimuth.features.featurization as feat
 
 def check_feature_set_dims(feature_sets):
