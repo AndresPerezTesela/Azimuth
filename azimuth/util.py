@@ -328,7 +328,7 @@ def concatenate_feature_sets(feature_sets, keys=None):
     '''
     assert feature_sets != {}, "no feature sets present"
     if keys is None:
-        keys = feature_sets.keys()
+        keys = list(feature_sets.keys())
 
     F = feature_sets[keys[0]].shape[0]
     for _et in feature_sets.keys():
