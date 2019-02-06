@@ -539,7 +539,7 @@ def predict(seq, aa_cut=-1, percent_peptide=-1, model=None, model_file=None, pam
 
     if model is None:
         with open(model_file, 'rb') as f:
-            model, learn_options = pickle.load(f)
+            model, learn_options = pickle.load(f, encoding='latin1')
     else:
         model, learn_options = model
         
